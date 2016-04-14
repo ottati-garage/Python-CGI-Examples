@@ -27,7 +27,7 @@ RADIO_TEMPLATE = """
 
 
 class PollView(PickleMixin, BaseView):
-    filepath = "./data/favorite_language.dat"
+    filepath = "favorite_language.dat"
 
     def post(self, request):
         """投票されたときの処理
