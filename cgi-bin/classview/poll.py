@@ -33,7 +33,7 @@ class PollView(PickleMixin, BaseView):
         """投票されたときの処理
         """
         if 'language' in request.form:
-            lang = requgit absest.form['language'].value
+            lang = request.form['language'].value
             self.obj[lang] = self.obj.get(lang, 0) + 1
             self.save_obj()
 
