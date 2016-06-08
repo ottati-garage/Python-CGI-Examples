@@ -25,11 +25,11 @@ class Response():
         self.body = body
         return self
 
-    def make_output(self):
+    def generate_output(self):
         return self.header + self.body
 
     def __str__(self):
-        return self.make_output()
+        return self.generate_output()
 
 
 class BaseView():
