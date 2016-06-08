@@ -45,7 +45,7 @@ def incrementvalue(cur, lang_name):
 # テーブル作成を試みる (DBファイルがない場合は自動的に作成)
 try:
     cur.execute("CREATE TABLE language_pole (name text, value int);")
-except:
+except sqlite3.OperationalError:
     pass  # すでに作成されていた
 
 # データの更新
