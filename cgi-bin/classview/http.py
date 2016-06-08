@@ -46,7 +46,7 @@ class BaseView():
             setattr(self, k, v)
 
     def render(self, request):
-        """Requestを受け、標準出力用の文字列を返すメソッド
+        """Request objを受け、Response objを返す
         """
         return self.dispatch(request)
 
