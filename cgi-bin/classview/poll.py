@@ -42,8 +42,10 @@ class PollView(PickleMixin, BaseView):
         for lang in ['Perl', 'PHP', 'Python', 'Ruby']:
             num = self.obj.get(lang, 0)
             meter = "".join(["◆" for _ in range(num)])
-            radios_html += RADIO_TEMPLATE.format(language=lang, num=num, meter=meter)
+            radios_html += RADIO_TEMPLATE.format(language=lang, num=num,
+                                                 meter=meter)
         return FORM_TEMPLATE % radios_html
+
 
 if __name__ == "__main__":
     req = Request()

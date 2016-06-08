@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 import cgi
 import os
 import pickle
 
 
 class Request():
-    """HTTPのリクエストをハンドリングクラス
+    """HTTPリクエスト
     """
     def __init__(self, environ=os.environ):
         self.form = cgi.FieldStorage()
@@ -15,7 +16,7 @@ class Request():
 
 
 class Response():
-    """HTTPのレスポンスをハンドリングするクラス
+    """HTTPレスポンス
     """
     def __init__(self):
         self.header = "Content-type: text/html\n"
@@ -49,7 +50,8 @@ class BaseView():
         """Requestを受け、標準出力用の文字列を返すメソッド
         """
         self.dispatch(request)
-        return self.response.set_body(self.get_template() % self.get_content(request))
+        return self.response.set_body(
+            self.get_template() % self.get_content(request))
 
     def dispatch(self, request):
         if request.method.lower() not in self.http_method_names:
@@ -110,6 +112,7 @@ class PickleMixin():
 
     def get_filepath(self):
         return self.filepath
+
 
 if __name__ == "__main__":
     print("Content-type: text/html\n")

@@ -6,8 +6,8 @@ import random
 
 
 class OmikujiView(BaseView):
-    sushi_list = ['はまち', 'まぐろ', 'さば', 'さーもん', 'いくら', 'ほたて', 'たい', 'えび', 'たこ',
-                  'いくら']
+    sushi_list = ['はまち', 'まぐろ', 'さば', 'さーもん', 'いくら', 'ほたて', 'たい',
+                  'えび', 'たこ', 'いくら']
 
     def get_content(self, request):
         sushi = random.choice((self.sushi_list))
