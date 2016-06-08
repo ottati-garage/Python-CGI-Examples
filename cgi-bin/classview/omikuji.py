@@ -11,7 +11,7 @@ class OmikujiView(BaseView):
 
     def get_content(self, request):
         sushi = random.choice((self.sushi_list))
-        body = "<h1>すしランダム</h1><p>(/・ω・)/ 「%s」</p>" % sushi
+        body = "<h1>すしランダム</h1><p>つ「%s」</p>" % sushi
         return body
 
 if __name__ == "__main__":
