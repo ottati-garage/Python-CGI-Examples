@@ -58,7 +58,7 @@ class BaseView():
                               self.http_method_not_allowed)
         return handler(request)
 
-    def http_method_not_allowed():
+    def http_method_not_allowed(self, request):
         raise NotImplementedError
 
     def get(self, request):
