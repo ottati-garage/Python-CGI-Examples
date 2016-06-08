@@ -18,9 +18,9 @@ class Request():
 class Response():
     """HTTPレスポンス
     """
-    def __init__(self):
+    def __init__(self, body=""):
         self.header = "Content-type: text/html\n"
-        self.body = ""
+        self.set_body(body)
 
     def set_body(self, body):
         self.body = body
@@ -42,16 +42,13 @@ class BaseView():
     http_method_names = ['get', 'post']
 
     def __init__(self, **kwargs):
-        self.response = Response()
         for k, v in kwargs.items():
             setattr(self, k, v)
 
     def render(self, request):
         """Requestを受け、標準出力用の文字列を返すメソッド
         """
-        self.dispatch(request)
-        return self.response.set_body(
-            self.get_template() % self.get_content(request))
+        return self.dispatch(request)
 
     def dispatch(self, request):
         if request.method.lower() not in self.http_method_names:
@@ -59,19 +56,16 @@ class BaseView():
         else:
             handler = getattr(self, format(request.method.lower()),
                               self.http_method_not_allowed)
-        handler(request)
+        return handler(request)
 
     def http_method_not_allowed():
         raise NotImplementedError
 
     def get(self, request):
-        pass
+        return self.generate_response("It Works. (get)")
 
     def post(self, request):
-        pass
-
-    def get_content(self, request):
-        return "Content is not defined."
+        return self.generate_response("It Works. (post)")
 
     def get_template(self):
         html_body = """
@@ -79,9 +73,12 @@ class BaseView():
         <head>
         <meta charset="shift-jis">
         </head>
-        <body>%s</body>
+        <body>{}</body>
         </html>"""
         return html_body
+
+    def generate_response(self, content):
+        return Response(self.get_template().format(content))
 
 
 class PickleMixin():

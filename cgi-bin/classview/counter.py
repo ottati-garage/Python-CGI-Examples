@@ -12,9 +12,8 @@ class CounterView(PickleMixin, BaseView):
     def get(self, request):
         self.obj['count'] = self.obj.get('count', 0) + 1
         self.save_obj()
-
-    def get_content(self, request):
-        return "<p>Views: %s</p>" % self.obj.get('count', 0)
+        content = "<p>Views: %s</p>" % self.obj.get('count', 0)
+        return self.generate_response(content)
 
 
 if __name__ == "__main__":

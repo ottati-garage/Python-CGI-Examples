@@ -11,7 +11,7 @@ cgitb.enable()  # デバッグモード
 FORM_TEMPLATE = """
 <form method="POST" action="">
 <p>好きな軽量言語は？</p>
-%s
+{}
 <p><button type="submit">投票</button></p>
 </form>
 """
@@ -29,6 +29,16 @@ RADIO_TEMPLATE = """
 class PollView(PickleMixin, BaseView):
     filepath = "favorite_language.dat"
 
+    def get(self, request):
+        radios_html = ""
+        for lang in ['Perl', 'PHP', 'Python', 'Ruby']:
+            num = self.obj.get(lang, 0)
+            meter = "".join(["◆" for _ in range(num)])
+            radios_html += RADIO_TEMPLATE.format(language=lang, num=num,
+                                                 meter=meter)
+        content = FORM_TEMPLATE.format(radios_html)
+        return self.generate_response(content)
+
     def post(self, request):
         """投票されたときの処理
         """
@@ -36,15 +46,9 @@ class PollView(PickleMixin, BaseView):
             lang = request.form['language'].value
             self.obj[lang] = self.obj.get(lang, 0) + 1
             self.save_obj()
-
-    def get_content(self, request):
-        radios_html = ""
-        for lang in ['Perl', 'PHP', 'Python', 'Ruby']:
-            num = self.obj.get(lang, 0)
-            meter = "".join(["◆" for _ in range(num)])
-            radios_html += RADIO_TEMPLATE.format(language=lang, num=num,
-                                                 meter=meter)
-        return FORM_TEMPLATE % radios_html
+        content = '<h1>ありがとうございました！</h1>'
+        content += '<a href="/cgi-bin/classview/poll.py">＜＜ 投票画面に戻る</a>'
+        return self.generate_response(content)
 
 
 if __name__ == "__main__":
