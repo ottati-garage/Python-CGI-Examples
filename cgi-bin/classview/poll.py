@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from httphandler import PickleMixin, BaseView, Request
+from http import PickleMixin, BaseView, Request
 import cgitb
 
 

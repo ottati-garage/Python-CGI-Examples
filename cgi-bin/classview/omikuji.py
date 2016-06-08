@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from httphandler import BaseView, Request
+from http import BaseView, Request
 import random
 
 

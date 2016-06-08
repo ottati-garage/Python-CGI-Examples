@@ -96,10 +96,13 @@ class PickleMixin():
             f = open(self.get_filepath(), "rb")
             obj = pickle.load(f)
         except IOError:
-            obj = {}
+            obj = self.init_obj()
         else:
             f.close()
         return obj
+
+    def init_obj(self):
+        return {}
 
     def save_obj(self):
         with open(self.get_filepath(), 'wb') as f:
