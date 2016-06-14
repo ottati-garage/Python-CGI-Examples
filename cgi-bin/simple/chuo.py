@@ -9,6 +9,8 @@ cgitb.enable()  # デバッグモード
 
 
 def get_cost(pair, data):
+    if len(pair) == 1:
+        return 0
     for d in data:
         if d['pair'] == pair:
             return d['cost']
@@ -23,9 +25,12 @@ DATA = [
 
 
 form = cgi.FieldStorage()
-pair = set([form['from'].value, form['to'].value])
-num = int(form['n'].value)
+from_ = form.getvalue('from', 'Shinjuku')
+to = form.getvalue('to', 'Nakano')
+pair = set([from_, to])
+num = int(form.getvalue('n', 1))
 cost = get_cost(pair, DATA) * num
+
 
 # ヘッダ文字列の作成
 header = "Content-type: text/html\n\n"
@@ -33,6 +38,16 @@ header = "Content-type: text/html\n\n"
 # HTML文字列の作成
 html = """
 <meta charset="shift-jis">
-<h1>{}円</h1>
-""".format(cost)
+<h1>{cost}円</h1>
+
+<form method="GET" action="">
+出発: <input type="text" name="from" value="{from_}">
+<br>
+到着: <input type="text" name="to" value="{to}">
+<br>
+人数: <input type="number" name="n" value="{num}">
+<p><input type="submit"></p>
+</form>
+
+""".format(cost=cost, from_=from_, to=to, num=num)
 print(header + html)
